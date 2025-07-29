@@ -127,14 +127,13 @@ export const ChatInterface = () => {
             ref={scrollAreaRef}
             className="flex-1 p-4 matrix-terminal"
           >
-            {messages.map((message, index) => (
+            {messages.map((message) => (
               <ChatMessage
                 key={message.id}
                 message={message.text}
                 isUser={message.isUser}
                 timestamp={message.timestamp}
                 files={message.files}
-                isLastMessage={!message.isUser && index === messages.length - 1}
               />
             ))}
             

@@ -4,10 +4,9 @@ interface DecodingTextProps {
   text: string;
   speed?: number;
   className?: string;
-  showCursorAfter?: boolean;
 }
 
-export const DecodingText = ({ text, speed = 50, className = '', showCursorAfter = false }: DecodingTextProps) => {
+export const DecodingText = ({ text, speed = 50, className = '' }: DecodingTextProps) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDecoding, setIsDecoding] = useState(true);
@@ -54,9 +53,6 @@ export const DecodingText = ({ text, speed = 50, className = '', showCursorAfter
       {displayText}
       {isDecoding && (
         <span className="animate-pulse text-primary">|</span>
-      )}
-      {!isDecoding && showCursorAfter && (
-        <span className="animate-pulse text-primary">_</span>
       )}
     </span>
   );
