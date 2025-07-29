@@ -61,7 +61,24 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Matrix-specific colors
+				matrix: {
+					green: 'hsl(var(--matrix-green))',
+					'green-bright': 'hsl(var(--matrix-green-bright))',
+					'green-dim': 'hsl(var(--matrix-green-dim))',
+					black: 'hsl(var(--matrix-black))',
+					dark: 'hsl(var(--matrix-dark))'
 				}
+			},
+			fontFamily: {
+				mono: ['Source Code Pro', 'Courier New', 'monospace'],
+				matrix: ['Source Code Pro', 'Courier New', 'monospace']
+			},
+			boxShadow: {
+				'matrix-glow': '0 0 20px hsl(var(--primary) / 0.3)',
+				'matrix-glow-lg': '0 0 40px hsl(var(--primary) / 0.5)',
+				'matrix-terminal': '0 0 20px hsl(var(--primary) / 0.1), inset 0 0 20px hsl(var(--primary) / 0.05)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
