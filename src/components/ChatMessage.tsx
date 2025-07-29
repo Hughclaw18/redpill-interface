@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
 import { User, Bot } from 'lucide-react';
-import { DecodingText } from './DecodingText';
 
 interface ChatMessageProps {
   message: string;
@@ -22,11 +21,7 @@ export const ChatMessage = ({ message, isUser, timestamp, files }: ChatMessagePr
       <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[70%]`}>
         <Card className={`p-3 matrix-terminal ${isUser ? 'bg-secondary' : 'bg-card'}`}>
           <div className="whitespace-pre-wrap font-mono text-sm matrix-glow">
-            {isUser ? (
-              message
-            ) : (
-              <DecodingText text={message} speed={30} className="text-primary" />
-            )}
+            {message}
           </div>
           
           {files && files.length > 0 && (
