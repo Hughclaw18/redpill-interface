@@ -10,6 +10,7 @@ import { ChatMessage } from './ChatMessage';
 import { FileUpload } from './FileUpload';
 import { SpeechToText } from './SpeechToText';
 import { TextEditor } from './TextEditor';
+import { DecodingText } from './DecodingText';
 import { toast } from 'sonner';
 
 interface Message {
@@ -24,7 +25,7 @@ export const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Welcome to the Matrix Virtual Assistant. I am here to help you navigate the digital realm. How may I assist you today?',
+      text: 'Greetings, Neo. I am the Oracle. I have been expecting you. The Matrix holds many secrets, and I am here to guide you through them. What questions do you bring to me today?',
       isUser: false,
       timestamp: new Date(),
     }
@@ -62,11 +63,11 @@ export const ChatInterface = () => {
     // Simulate AI response
     setTimeout(() => {
       const responses = [
-        "I've processed your request. The data flows through the Matrix reveal interesting patterns...",
-        "Analyzing your query through the neural pathways of the system. Stand by for results...",
-        "The Matrix has provided the following insight based on your input...",
-        "Your request has been processed through the digital realm. Here's what I found...",
-        "The code streams show the following response to your query..."
+        "The patterns in the code reveal what you seek. Let me decode this information for you...",
+        "I see the threads of possibility in the Matrix. The answer emerges from the digital streams...",
+        "Your path through the Matrix has led you here. The Oracle speaks: this knowledge shall serve you...",
+        "The choice has been made, the question asked. Reality bends to reveal the truth you need...",
+        "Within the green rain of data, I find the wisdom you seek. Listen carefully, Neo..."
       ];
       
       const aiResponse: Message = {
@@ -97,15 +98,16 @@ export const ChatInterface = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-h-screen matrix-terminal">
+    <div className="flex flex-col h-screen max-h-screen matrix-terminal crt-monitor">
+      <div className="glitch-effect"></div>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border matrix-border">
         <div>
           <h1 className="text-xl font-bold font-mono matrix-glow text-primary">
-            MATRIX VIRTUAL ASSISTANT
+            THE ORACLE :: MATRIX INTERFACE
           </h1>
           <p className="text-xs text-muted-foreground font-mono">
-            Neural Interface v2.0 - Status: ONLINE
+            Neural Link v3.1 - Status: CONNECTED - Path of the One: ACTIVE
           </p>
         </div>
         <div className="flex gap-2">
@@ -125,13 +127,14 @@ export const ChatInterface = () => {
             ref={scrollAreaRef}
             className="flex-1 p-4 matrix-terminal"
           >
-            {messages.map((message) => (
+            {messages.map((message, index) => (
               <ChatMessage
                 key={message.id}
                 message={message.text}
                 isUser={message.isUser}
                 timestamp={message.timestamp}
                 files={message.files}
+                isLastMessage={!message.isUser && index === messages.length - 1}
               />
             ))}
             
@@ -167,7 +170,7 @@ export const ChatInterface = () => {
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Enter your query to the Matrix..."
+                  placeholder="Ask the Oracle your question..."
                   className="font-mono matrix-border bg-input"
                   disabled={isLoading}
                 />
