@@ -8,9 +8,10 @@ interface ChatMessageProps {
   isUser: boolean;
   timestamp: Date;
   files?: File[];
+  isLastMessage?: boolean;
 }
 
-export const ChatMessage = ({ message, isUser, timestamp, files }: ChatMessageProps) => {
+export const ChatMessage = ({ message, isUser, timestamp, files, isLastMessage = false }: ChatMessageProps) => {
   return (
     <div className={`flex gap-3 mb-4 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
       <Avatar className="w-8 h-8 matrix-border">
@@ -25,7 +26,7 @@ export const ChatMessage = ({ message, isUser, timestamp, files }: ChatMessagePr
             {isUser ? (
               message
             ) : (
-              <DecodingText text={message} speed={30} className="text-primary" />
+              <DecodingText text={message} speed={30} className="text-primary" showCursorAfter={isLastMessage} />
             )}
           </div>
           
