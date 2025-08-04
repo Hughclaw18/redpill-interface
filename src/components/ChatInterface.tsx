@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -11,7 +13,6 @@ import { FileUpload } from './FileUpload';
 import { SpeechToText } from './SpeechToText';
 import { TextEditor } from './TextEditor';
 import { DecodingText } from './DecodingText';
-import { toast } from 'sonner';
 
 interface Message {
   id: string;
@@ -60,26 +61,46 @@ export const ChatInterface = () => {
     setSelectedFiles([]);
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "The patterns in the code reveal what you seek. Let me decode this information for you...",
-        "I see the threads of possibility in the Matrix. The answer emerges from the digital streams...",
-        "Your path through the Matrix has led you here. The Oracle speaks: this knowledge shall serve you...",
-        "The choice has been made, the question asked. Reality bends to reveal the truth you need...",
-        "Within the green rain of data, I find the wisdom you seek. Listen carefully, Neo..."
-      ];
-      
+    try {
+      if (selectedFiles.length > 0) {
+        const formData = new FormData();
+        selectedFiles.forEach(file => {
+          formData.append('files', file);
+        });
+
+        try {
+          await axios.post('http://localhost:8000/ingest', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          toast.success('Documents ingested successfully!');
+        } catch (fileError) {
+          console.error('Error ingesting documents:', fileError);
+          toast.error('Failed to ingest documents. Please try again.');
+          setIsLoading(false);
+          return; // Stop further execution if file ingestion fails
+        }
+      }
+
+      const response = await axios.post('http://localhost:8000/chat', {
+        message: inputText,
+      });
+
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: responses[Math.floor(Math.random() * responses.length)],
+        text: response.data.response,
         isUser: false,
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, aiResponse]);
+      setMessages((prev) => [...prev, aiResponse]);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error('Failed to get response from the Oracle. Please try again.');
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
